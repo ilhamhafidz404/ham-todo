@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 
 class TodoList extends Component
 {
-  public $task, $taskId, $priority;
+  public $task, $taskId, $priority, $note;
   public $edit = false;
   public $tasks = [];
   public function render() {
@@ -20,10 +20,13 @@ class TodoList extends Component
     Task::create([
       'task' => $this->task,
       'slug' => Str::slug($this->task),
-      "priority" => $this->priority
+      "priority" => $this->priority,
+      "note" => $this->note
     ]);
 
-    $this->task = '';
+    $this->task = null;
+    $this->priority = null;
+    $this->note = null;
 
     session()->flash('success', 'Berhasil Menambah Tugas');
   }
@@ -32,14 +35,25 @@ class TodoList extends Component
     Task::find($id)->delete();
   }
 
-  public function edit($tugas, $id) {
+  public function edit($tugas, $id, $priority, $note) {
     $this->edit = true;
     $this->task = $tugas;
     $this->taskId = $id;
+    $this->priority= $priority;
+    $this->note= $note;
   }
 
   public function cancelEdit(){
     $this->edit= false;
+    $this->taskId= null;
+    $this->task= null;
+    $this->priority= null;
+    $this->note= null;
+  }
+
+  public function resetSetting(){
+    $this->priority= null;
+    $this->note= null;;
   }
 
   public function update() {
@@ -48,10 +62,19 @@ class TodoList extends Component
     $task->update([
       "task" => $this->task,
       "slug" => Str::slug($this->task),
-      "priority" => $this->priority
+      "note" => $this->note
     ]);
 
+    if($this->priority){
+      $task->update([
+        "priority" => $this->priority,
+      ]);
+    }
+
     $this->edit= false;
+    $this->taskId= null;
     $this->task= null;
+    $this->priority= null;
+    $this->note= null;
   }
 }

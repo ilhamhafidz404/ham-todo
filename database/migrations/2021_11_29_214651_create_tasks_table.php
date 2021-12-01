@@ -17,7 +17,8 @@ class CreateTasksTable extends Migration
             $table->id();
             $table->string('task');
             $table->string('slug');
-            $table->enum('priority', ['low', 'medium', 'hard']);
+            $table->enum('priority', ['low', 'medium', 'hard'])->nullable();
+            $table->text('note')->nullable();
             $table->timestamps();
         });
     }
