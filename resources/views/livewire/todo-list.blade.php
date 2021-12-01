@@ -1,5 +1,12 @@
 <div class="w-1/2 mx-auto mt-10">
 
+  
+  <div class="fixed flex items-center top-0 bottom-0 left-0 z-20 transition duration-500" id="drawerToggler">
+    <button type="button" class="btn btn-primary rounded-l-none" onclick="showDrawer()">
+      <i class="fas fa-chevron-right" id="drawerButtonIcon"></i>
+    </button>
+  </div>
+
   @if (session()->has('success'))
   <div class="alert alert-success fixed right-0 top-0 m-5">
     <div class="flex-1">
@@ -133,7 +140,7 @@
     @endif
   </div>
 
-  <div class="card mt-10 text-black bg-white mb-20">
+  <div class="card mt-10 text-black bg-white">
     <div class="overflow-x-auto">
       <table class="table w-full table-zebra">
         <thead>
@@ -146,7 +153,7 @@
           </tr>
         </thead>
         <tbody>
-          @forelse ($tasks as $index => $task)
+          @forelse ($myTasks as $index => $task)
             @if ($task->id == $taskId)
               <tr class="hover">
                 <th style="padding: 0px !important">
@@ -240,4 +247,63 @@
       </table>
     </div>
   </div>
+
+  @if ($todoSetting)
+  <div class="absolute bg-white p-5 rounded right-10 top-52">
+    <ul>
+      <li>
+        <button wire:click="filterPriority('low')" class="btn btn-primary">! Low Priority</button>
+      </li>
+      <li>
+        <button wire:click="filterPriority('medium')" class="btn btn-primary">!! Medium Priority</button>
+      </li>
+      <li>
+        <button wire:click="filterPriority('hard')" class="btn btn-primary">!!! Hard Priority</button>
+      </li>
+    </ul>
+  </div>
+  @endif
+  
+  <div class="mb-20 mt-10">
+    {{ $myTasks->links() }}
+    {{ $filterPrioritySetting }}
+  </div>
+
+  <div id="overlay" class="z-10 fixed top-0 left-0 bottom-0 bg-black opacity-50"></div>
+  <div class="bg-white w-80 fixed -left-80 top-0 bottom-0 z-20 transition duration-500" id="drawer">
+    <div class="drawer-side">
+      <form wire:submit.prevent="todoSetting()">
+        <ul class="menu p-4 overflow-y-auto text-base-content">
+          <li>
+            <div class="flex items-center">
+              <input type="checkbox" checked="checked" class="checkbox checkbox-md mr-2" wire:model.defer='filterPrioritySetting' value="on" id="filterPrioritySetting">
+              <label for="filterPrioritySetting" class="label">Filter Priority</label>
+            </div>
+          </li> 
+          <li>
+            <a>Menu Item</a>
+          </li>
+        </ul>
+
+        <button class="btn btn-primary">Save Setting</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const showDrawer= ()=>{
+      const drawer= document.querySelector('#drawer');
+      const overlay= document.querySelector('#overlay');
+      const drawerToggler= document.querySelector('#drawerToggler');
+      const drawerButtonIcon= document.querySelector('#drawerButtonIcon');
+      drawer.classList.toggle('-left-80');
+      drawer.classList.toggle('left-0');
+      overlay.classList.toggle('right-0');
+      drawerToggler.classList.toggle('left-80');
+      drawerToggler.classList.toggle('left-0');
+      drawerButtonIcon.classList.toggle('fa-chevron-right');
+      drawerButtonIcon.classList.toggle('fa-chevron-left');
+    }
+  </script>
+
 </div>

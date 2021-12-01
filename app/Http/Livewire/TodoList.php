@@ -3,19 +3,47 @@
 namespace App\Http\Livewire;
 
 use App\Models\Task;
-use Illuminate\Support\Facades\Session;
 use Livewire\Component;
 use Illuminate\Support\Str;
+use Livewire\WithPagination;
 
 class TodoList extends Component
 {
+
+  use WithPagination;
+
   public $task, $taskId, $priority, $note;
   public $edit = false;
   public $tasks = [];
+
+  public $todoSetting= false, $filterPrioritySetting, $filterTagSetting;
+  public $filterPriority;
   public function render() {
-    $this->tasks = Task::latest()->get();
-    return view('livewire.todo-list');
+    if(!$this->filterPriority){
+      $myTasks= Task::latest()->paginate(10);
+    } else{
+      $myTasks= Task::where('priority', 'LIKE', '%'.$this->filterPriority.'%')->latest()->paginate(5);
+    }
+    // $myTasks= Task::latest()->paginate(10);
+    return view('livewire.todo-list', compact('myTasks'));
   }
+
+  public function filterPriority($filterBy){
+    $this->filterPriority = $filterBy;
+  }
+
+  public function todoSetting(){
+    if($this->filterPrioritySetting || $this->filterTagSetting){
+      $this->todoSetting= true;
+    } else{
+      $this->todoSetting= false;
+    }
+    $this->filterPrioritySetting= $this->filterPrioritySetting;
+    if($this->filterPrioritySetting == null){
+      $this->filterPriority= null;
+    }
+  }
+
   public function store() {
     Task::create([
       'task' => $this->task,
