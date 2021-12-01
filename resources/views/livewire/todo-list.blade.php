@@ -1,6 +1,6 @@
 <div class="w-1/2 mx-auto mt-10">
 
-  
+
   <div class="fixed flex items-center top-0 bottom-0 left-0 z-20 transition duration-500" id="drawerToggler">
     <button type="button" class="btn btn-primary rounded-l-none" onclick="showDrawer()">
       <i class="fas fa-chevron-right" id="drawerButtonIcon"></i>
@@ -36,9 +36,9 @@
             <input type="text" placeholder="Memasak" class="w-full pr-16 pl-5 input input-success input-bordered bg-gray-100 text-gray-800" id="task" wire:model="task">
             <div data-tip="Setting" class="tooltip absolute top-0 right-0" style="margin-right: 40px">
               <label for="setting-task" class="btn btn-info modal-button">
-                <i class="fas fa-cog"></i>  
-              </label> 
-              <input type="checkbox" id="setting-task" class="modal-toggle"> 
+                <i class="fas fa-cog"></i>
+              </label>
+              <input type="checkbox" id="setting-task" class="modal-toggle">
               <div class="modal">
                 <div class="modal-box text-left">
                   <fieldset class="border p-5 rounded-box">
@@ -61,11 +61,11 @@
                   <div class="form-group mt-4">
                     <label class="label" for="note">
                       <span class="label-text text-md">Note :</span>
-                    </label> 
+                    </label>
                     <textarea id="note" class="textarea h-24 textarea-bordered w-full text-gray-800" wire:model="note"></textarea>
                   </div>
                   <div class="modal-action">
-                    <label for="setting-task" class="btn btn-primary">Save Setting</label> 
+                    <label for="setting-task" class="btn btn-primary">Save Setting</label>
                     <label class="btn" wire:click="resetSetting()">Reset Setting </label>
                   </div>
                 </div>
@@ -89,45 +89,45 @@
         <div class="relative">
           <input type="text" placeholder="Memasak" class="w-full pr-16 input input-primary input-bordered bg-gray-100 text-gray-800" id="task" wire:model="task">
           @if ($task)
-            <div data-tip="Setting" class="tooltip absolute top-0 right-0" style="margin-right: 40px">
-              <label for="setting-task" class="btn btn-info modal-button">
-                <i class="fas fa-cog"></i>  
-              </label> 
-              <input type="checkbox" id="setting-task" class="modal-toggle"> 
-              <div class="modal">
-                <div class="modal-box text-left">
-                  <fieldset class="border p-5 rounded-box">
-                    <legend class="text-gray-800 px-3">Change Priority</legend>
-                    <div class="flex mt-3 items-center">
-                      <div class="form-group text-info mr-3 flex items-center">
-                        <input type="radio" value="low" id="low" name="priority" wire:model="priority" class="radio radio-accent radio-xs mr-1">
-                        <label for="low">! Low Priority</label>
-                      </div>
-                      <div class="form-group text-warning mr-3 flex items-center">
-                        <input type="radio" value="medium" id="medium" name="priority" wire:model="priority" class="radio radio-primary radio-xs mr-1">
-                        <label for="medium">!! Medium Priority</label>
-                      </div>
-                      <div class="form-group text-error mr-3 flex items-center">
-                        <input type="radio" value="hard" id="hard" name="priority" wire:model="priority" class="radio radio-secondary radio-xs mr-1">
-                        <label for="hard">!!! Hard Priority</label>
-                      </div>
+          <div data-tip="Setting" class="tooltip absolute top-0 right-0" style="margin-right: 40px">
+            <label for="setting-task" class="btn btn-info modal-button">
+              <i class="fas fa-cog"></i>
+            </label>
+            <input type="checkbox" id="setting-task" class="modal-toggle">
+            <div class="modal">
+              <div class="modal-box text-left">
+                <fieldset class="border p-5 rounded-box">
+                  <legend class="text-gray-800 px-3">Change Priority</legend>
+                  <div class="flex mt-3 items-center">
+                    <div class="form-group text-info mr-3 flex items-center">
+                      <input type="radio" value="low" id="low" name="priority" wire:model="priority" class="radio radio-accent radio-xs mr-1">
+                      <label for="low">! Low Priority</label>
                     </div>
-                  </fieldset>
-                  <div class="form-group mt-4">
-                    <label class="label" for="note">
-                      <span class="label-text text-md">Note :</span>
-                    </label> 
-                    <textarea id="note" class="textarea h-24 textarea-bordered w-full text-gray-800" wire:model="note"></textarea>
+                    <div class="form-group text-warning mr-3 flex items-center">
+                      <input type="radio" value="medium" id="medium" name="priority" wire:model="priority" class="radio radio-primary radio-xs mr-1">
+                      <label for="medium">!! Medium Priority</label>
+                    </div>
+                    <div class="form-group text-error mr-3 flex items-center">
+                      <input type="radio" value="hard" id="hard" name="priority" wire:model="priority" class="radio radio-secondary radio-xs mr-1">
+                      <label for="hard">!!! Hard Priority</label>
+                    </div>
                   </div>
-                  <div class="modal-action">
-                    <label for="setting-task" class="btn btn-primary">Save Setting</label> 
-                    <label for="setting-task" class="btn" wire:click="resetSetting()">Cancel and Close</label>
-                  </div>
+                </fieldset>
+                <div class="form-group mt-4">
+                  <label class="label" for="note">
+                    <span class="label-text text-md">Note :</span>
+                  </label>
+                  <textarea id="note" class="textarea h-24 textarea-bordered w-full text-gray-800" wire:model="note"></textarea>
+                </div>
+                <div class="modal-action">
+                  <label for="setting-task" class="btn btn-primary">Save Setting</label>
+                  <label for="setting-task" class="btn" wire:click="resetSetting()">Cancel and Close</label>
                 </div>
               </div>
             </div>
+          </div>
           @else
-            <div></div>
+          <div></div>
           @endif
           <div data-tip="Tambah" class="tooltip absolute top-0 right-0">
             <button class="flex items-center h-full w-full rounded-l-none btn btn-primary">
@@ -154,94 +154,96 @@
         </thead>
         <tbody>
           @forelse ($myTasks as $index => $task)
-            @if ($task->id == $taskId)
-              <tr class="hover">
-                <th style="padding: 0px !important">
-                  <div style="width: 6px; height: 85%; transform: translateY(-50%)" class="bg-green-500 absolute left-0 top-1/5 cursor-pointer rounded">
-                    <div data-tip="Editing" class="tooltip w-full h-full tooltip-right">
-                    </div>
+          @if ($task->id == $taskId)
+          <tr class="hover">
+            <th style="padding: 0px !important">
+              <div style="width: 6px; height: 85%; transform: translateY(-50%)" class="bg-green-500 absolute left-0 top-1/5 cursor-pointer rounded">
+                <div data-tip="Editing" class="tooltip w-full h-full tooltip-right">
+                </div>
+              </div>
+            </th>
+            <th>
+              <label>
+                <input type="checkbox" checked class="checkbox">
+              </label>
+            </th>
+            <td colspan="3">
+              <div class="flex items-center text-center space-x-3 ml-20">
+                <div>
+                  <div class="font-bold">
+                    Tugas ini sedang dalam proses edit
                   </div>
-                </th>
-                <th>
-                  <label>
-                    <input type="checkbox" checked class="checkbox">
-                  </label>
-                </th>
-                <td colspan="3">
-                  <div class="flex items-center text-center space-x-3 ml-20">
-                    <div>
-                      <div class="font-bold">
-                        Tugas ini sedang dalam proses edit
-                      </div>
-                    </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+          @else
+          <tr class="hover">
+            <th style="padding: 0px !important">
+              @if ($task->priority == 'low')
+              <div style="width: 6px; height: 85%; transform: translateY(-50%)" class="bg-blue-500 absolute left-0 top-1/5 cursor-pointer rounded">
+                <div data-tip="! Low" class="tooltip w-full h-full tooltip-right">
+                </div>
+              </div>
+              @elseif($task->priority == 'medium')
+              <div style="width: 6px; height: 85%; transform: translateY(-50%)" class="bg-yellow-500 absolute left-0 top-1/5 cursor-pointer rounded">
+                <div data-tip="!! Medium" class="tooltip w-full h-full tooltip-right">
+                </div>
+              </div>
+              @elseif($task->priority == 'hard')
+              <div style="width: 6px; height: 85%; transform: translateY(-50%)" class="bg-red-500 absolute left-0 top-1/5 cursor-pointer rounded">
+                <div data-tip="!! Medium" class="tooltip w-full h-full tooltip-right">
+                </div>
+              </div>
+              @else
+              <div style="width: 6px; height: 85%; transform: translateY(-50%)" class="bg-gray-500 absolute left-0 top-1/5 cursor-pointer rounded">
+                <div data-tip="Not Priority" class="tooltip w-full h-full tooltip-right">
+                </div>
+              </div>
+              @endif
+            </th>
+            <th>
+              <label>
+                <input type="checkbox" class="checkbox">
+              </label>
+            </th>
+            <td>
+              <div class="flex items-center space-x-3">
+                <div>
+                  <div class="font-bold">
+                    {{ $task->task }}
                   </div>
-                </td>
-              </tr>
-            @else
-              <tr class="hover">
-                <th style="padding: 0px !important">
-                  @if ($task->priority == 'low')
-                    <div style="width: 6px; height: 85%; transform: translateY(-50%)" class="bg-blue-500 absolute left-0 top-1/5 cursor-pointer rounded">
-                      <div data-tip="! Low" class="tooltip w-full h-full tooltip-right">
-                      </div>
-                    </div>
-                  @elseif($task->priority == 'medium')
-                    <div style="width: 6px; height: 85%; transform: translateY(-50%)" class="bg-yellow-500 absolute left-0 top-1/5 cursor-pointer rounded">
-                      <div data-tip="!! Medium" class="tooltip w-full h-full tooltip-right">
-                      </div>
-                    </div>
-                  @elseif($task->priority == 'hard')
-                    <div style="width: 6px; height: 85%; transform: translateY(-50%)" class="bg-red-500 absolute left-0 top-1/5 cursor-pointer rounded">
-                      <div data-tip="!! Medium" class="tooltip w-full h-full tooltip-right">
-                      </div>
-                    </div>
-                  @else
-                    <div style="width: 6px; height: 85%; transform: translateY(-50%)" class="bg-gray-500 absolute left-0 top-1/5 cursor-pointer rounded">
-                      <div data-tip="Not Priority" class="tooltip w-full h-full tooltip-right">
-                      </div>
-                    </div>
-                  @endif
-                </th>
-                <th>
-                  <label>
-                    <input type="checkbox" class="checkbox">
-                  </label>
-                </th>
-                <td>
-                  <div class="flex items-center space-x-3">
-                    <div>
-                      <div class="font-bold">
-                        {{ $task->task }}
-                      </div>
-                      <div class="text-sm opacity-50">
-                        United States
-                      </div>
-                    </div>
+                  <div class="text-sm opacity-50">
+                    @foreach($task->hastag as $hastag)
+                    {{ $hastag->name }}
+                    @endforeach
                   </div>
-                </td>
-                <th>
-                  <button class="btn btn-ghost btn-xs">details</button>
-                </th>
-                <td>
-                  <div data-tip="Hapus" class="tooltip">
-                    <button class="btn btn-error btn-sm" wire:click="destroy({{$task->id}})">
-                      <i class="fas fa-trash-alt"></i>
-                    </button>
-                  </div>
-                  <div data-tip="Edit" class="tooltip">
-                    <button class="btn btn-info btn-sm" wire:click="edit('{{$task->task}}', {{$task->id}}, '{{ $task->priority }}', '{{ $task->note }}')" value="true">
-                      <i class="fas fa-pencil-alt"></i>
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            @endif
+                </div>
+              </div>
+            </td>
+            <th>
+              <button class="btn btn-ghost btn-xs">details</button>
+            </th>
+            <td>
+              <div data-tip="Hapus" class="tooltip">
+                <button class="btn btn-error btn-sm" wire:click="destroy({{$task->id}})">
+                  <i class="fas fa-trash-alt"></i>
+                </button>
+              </div>
+              <div data-tip="Edit" class="tooltip">
+                <button class="btn btn-info btn-sm" wire:click="edit('{{$task->task}}', {{$task->id}}, '{{ $task->priority }}', '{{ $task->note }}')" value="true">
+                  <i class="fas fa-pencil-alt"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+          @endif
           @empty
-            <tr>
-              <th colspan="5" class="text-center">
-                Tidak Ada Tugas Hari Ini
-              </th>
-            </tr>
+          <tr>
+            <th colspan="5" class="text-center">
+              Tidak Ada Tugas Hari Ini
+            </th>
+          </tr>
           @endforelse
         </tbody>
       </table>
@@ -263,7 +265,7 @@
     </ul>
   </div>
   @endif
-  
+
   <div class="mb-20 mt-10">
     {{ $myTasks->links() }}
     {{ $filterPrioritySetting }}
@@ -279,7 +281,7 @@
               <input type="checkbox" checked="checked" class="checkbox checkbox-md mr-2" wire:model.defer='filterPrioritySetting' value="on" id="filterPrioritySetting">
               <label for="filterPrioritySetting" class="label">Filter Priority</label>
             </div>
-          </li> 
+          </li>
           <li>
             <a>Menu Item</a>
           </li>
@@ -291,11 +293,11 @@
   </div>
 
   <script>
-    const showDrawer= ()=>{
-      const drawer= document.querySelector('#drawer');
-      const overlay= document.querySelector('#overlay');
-      const drawerToggler= document.querySelector('#drawerToggler');
-      const drawerButtonIcon= document.querySelector('#drawerButtonIcon');
+    const showDrawer = ()=> {
+      const drawer = document.querySelector('#drawer');
+      const overlay = document.querySelector('#overlay');
+      const drawerToggler = document.querySelector('#drawerToggler');
+      const drawerButtonIcon = document.querySelector('#drawerButtonIcon');
       drawer.classList.toggle('-left-80');
       drawer.classList.toggle('left-0');
       overlay.classList.toggle('right-0');
