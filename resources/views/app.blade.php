@@ -13,6 +13,7 @@
     @livewire('todo-list')
 
 
+    <script src="https://kit.fontawesome.com/bfdfedea1a.js" crossorigin="anonymous"></script>
     @livewireScripts
 </body>
 </html>

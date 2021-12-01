@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 
 class TodoList extends Component
 {
-  public $task;
+  public $task, $taskId, $priority;
   public $edit = false;
   public $tasks = [];
   public function render() {
@@ -19,7 +19,8 @@ class TodoList extends Component
   public function store() {
     Task::create([
       'task' => $this->task,
-      'slug' => Str::slug($this->task)
+      'slug' => Str::slug($this->task),
+      "priority" => $this->priority
     ]);
 
     $this->task = '';
@@ -31,19 +32,26 @@ class TodoList extends Component
     Task::find($id)->delete();
   }
 
-  public function edit($tugas) {
+  public function edit($tugas, $id) {
     $this->edit = true;
     $this->task = $tugas;
+    $this->taskId = $id;
+  }
+
+  public function cancelEdit(){
+    $this->edit= false;
   }
 
   public function update() {
-    $task = Task::whereTask($this->task)->first();
+    $task = Task::find($this->taskId);
 
     $task->update([
       "task" => $this->task,
-      "slug" => Str::slug($this->task)
+      "slug" => Str::slug($this->task),
+      "priority" => $this->priority
     ]);
 
-    dd($task);
+    $this->edit= false;
+    $this->task= null;
   }
 }
