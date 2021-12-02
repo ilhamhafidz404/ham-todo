@@ -16,13 +16,13 @@ class TodoList extends Component
   public $edit = false;
   public $tasks = [];
 
-  public $todoSetting= false, $filterPrioritySetting, $filterTagSetting;
-  public $filterPriority;
+  public $todoSetting= false, $filterPrioritySetting, $filterTagSetting, $searchSetting, $addSetting= 'on';
+  public $filterPriority, $searchTask;
   public function render() {
     if(!$this->filterPriority){
-      $myTasks= Task::latest()->paginate(10);
+      $myTasks= Task::where('task', 'LIKE', '%'.$this->searchTask.'%')->latest()->paginate(10);
     } else{
-      $myTasks= Task::where('priority', 'LIKE', '%'.$this->filterPriority.'%')->latest()->paginate(5);
+      $myTasks= Task::where('priority', 'LIKE', '%'.$this->filterPriority.'%')->where('task', 'LIKE', '%'.$this->searchTask.'%')->latest()->paginate(5);
     }
     // $myTasks= Task::latest()->paginate(10);
     return view('livewire.todo-list', compact('myTasks'));
@@ -39,8 +39,11 @@ class TodoList extends Component
       $this->todoSetting= false;
     }
     $this->filterPrioritySetting= $this->filterPrioritySetting;
-    if($this->filterPrioritySetting == null){
+    $this->searchSetting= $this->searchSetting;
+    if($this->todoSetting == null){
       $this->filterPriority= null;
+      $this->searchTask= null;
+      $this->addSetting= 'on';
     }
   }
 

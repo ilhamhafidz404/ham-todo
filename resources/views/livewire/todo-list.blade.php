@@ -81,62 +81,88 @@
       </div>
     </form>
     @else
-    <form wire:submit.prevent="store()">
-      <div class="form-control">
-        <label class="label" for="task">
-          <span class="label-text font-bold tracking-wide">Tambah Task: </span>
-        </label>
-        <div class="relative">
-          <input type="text" placeholder="Memasak" class="w-full pr-16 input input-primary input-bordered bg-gray-100 text-gray-800" id="task" wire:model="task">
-          @if ($task)
-          <div data-tip="Setting" class="tooltip absolute top-0 right-0" style="margin-right: 40px">
-            <label for="setting-task" class="btn btn-info modal-button">
-              <i class="fas fa-cog"></i>
+      @if ($searchSetting)
+        <div class="form-control absolute right-0 top-0 p-3 rounded-box bg-gray-200">
+          <label class="cursor-pointer label">
+            <div class="inline-flex items-center">
+              <span class="label-text mr-2">Search Task</span> 
+              <input type="checkbox" checked="checked" class="toggle" value="on" wire:model="addSetting">
+              <span class="label-text ml-2">Add Task</span> 
+            </div>
+          </label>
+        </div>
+      @endif
+      @if ($addSetting)   
+        <form wire:submit.prevent="store()">
+          <div class="form-control">
+            <label class="label" for="task">
+              <span class="label-text font-bold tracking-wide">Tambah Task: </span>
             </label>
-            <input type="checkbox" id="setting-task" class="modal-toggle">
-            <div class="modal">
-              <div class="modal-box text-left">
-                <fieldset class="border p-5 rounded-box">
-                  <legend class="text-gray-800 px-3">Change Priority</legend>
-                  <div class="flex mt-3 items-center">
-                    <div class="form-group text-info mr-3 flex items-center">
-                      <input type="radio" value="low" id="low" name="priority" wire:model="priority" class="radio radio-accent radio-xs mr-1">
-                      <label for="low">! Low Priority</label>
+            <div class="relative">
+              <input type="text" placeholder="Memasak" class="w-full pr-16 input input-primary input-bordered bg-gray-100 text-gray-800" id="task" wire:model="task">
+              @if ($task)
+              <div data-tip="Setting" class="tooltip absolute top-0 right-0" style="margin-right: 40px">
+                <label for="setting-task" class="btn btn-info modal-button">
+                  <i class="fas fa-cog"></i>
+                </label>
+                <input type="checkbox" id="setting-task" class="modal-toggle">
+                <div class="modal">
+                  <div class="modal-box text-left">
+                    <fieldset class="border p-5 rounded-box">
+                      <legend class="text-gray-800 px-3">Change Priority</legend>
+                      <div class="flex mt-3 items-center">
+                        <div class="form-group text-info mr-3 flex items-center">
+                          <input type="radio" value="low" id="low" name="priority" wire:model="priority" class="radio radio-accent radio-xs mr-1">
+                          <label for="low">! Low Priority</label>
+                        </div>
+                        <div class="form-group text-warning mr-3 flex items-center">
+                          <input type="radio" value="medium" id="medium" name="priority" wire:model="priority" class="radio radio-primary radio-xs mr-1">
+                          <label for="medium">!! Medium Priority</label>
+                        </div>
+                        <div class="form-group text-error mr-3 flex items-center">
+                          <input type="radio" value="hard" id="hard" name="priority" wire:model="priority" class="radio radio-secondary radio-xs mr-1">
+                          <label for="hard">!!! Hard Priority</label>
+                        </div>
+                      </div>
+                    </fieldset>
+                    <div class="form-group mt-4">
+                      <label class="label" for="note">
+                        <span class="label-text text-md">Note :</span>
+                      </label>
+                      <textarea id="note" class="textarea h-24 textarea-bordered w-full text-gray-800" wire:model="note"></textarea>
                     </div>
-                    <div class="form-group text-warning mr-3 flex items-center">
-                      <input type="radio" value="medium" id="medium" name="priority" wire:model="priority" class="radio radio-primary radio-xs mr-1">
-                      <label for="medium">!! Medium Priority</label>
-                    </div>
-                    <div class="form-group text-error mr-3 flex items-center">
-                      <input type="radio" value="hard" id="hard" name="priority" wire:model="priority" class="radio radio-secondary radio-xs mr-1">
-                      <label for="hard">!!! Hard Priority</label>
+                    <div class="modal-action">
+                      <label for="setting-task" class="btn btn-primary">Save Setting</label>
+                      <label for="setting-task" class="btn" wire:click="resetSetting()">Cancel and Close</label>
                     </div>
                   </div>
-                </fieldset>
-                <div class="form-group mt-4">
-                  <label class="label" for="note">
-                    <span class="label-text text-md">Note :</span>
-                  </label>
-                  <textarea id="note" class="textarea h-24 textarea-bordered w-full text-gray-800" wire:model="note"></textarea>
                 </div>
-                <div class="modal-action">
-                  <label for="setting-task" class="btn btn-primary">Save Setting</label>
-                  <label for="setting-task" class="btn" wire:click="resetSetting()">Cancel and Close</label>
-                </div>
+              </div>
+              @else
+              <div></div>
+              @endif
+              <div data-tip="Tambah" class="tooltip absolute top-0 right-0">
+                <button class="flex items-center h-full w-full rounded-l-none btn btn-primary">
+                  <i class="fas fa-plus"></i>
+                </button>
               </div>
             </div>
           </div>
-          @else
-          <div></div>
-          @endif
-          <div data-tip="Tambah" class="tooltip absolute top-0 right-0">
-            <button class="flex items-center h-full w-full rounded-l-none btn btn-primary">
-              <i class="fas fa-plus"></i>
+        </form>
+      @endif
+      @if ($searchSetting && !$addSetting)
+        <div class="form-control">
+          <label class="label" for="task">
+            <span class="label-text font-bold tracking-wide">Search Task: </span>
+          </label>
+          <div class="relative">
+            <input placeholder="Search" class="w-full pr-16 input input-primary input-bordered text-gray-800" type="text" wire:model="searchTask"> 
+            <button class="absolute top-0 right-0 rounded-l-none btn btn-ghost text-gray-500">
+              <i class="fas fa-search"></i>
             </button>
           </div>
         </div>
-      </div>
-    </form>
+      @endif
     @endif
   </div>
 
@@ -241,7 +267,11 @@
           @empty
           <tr>
             <th colspan="5" class="text-center">
-              Tidak Ada Tugas Hari Ini
+              @if ($searchTask)
+                Tidak ada tugas {{ $searchTask }}
+              @else
+                  Tidak Ada Tugas Hari ini
+              @endif
             </th>
           </tr>
           @endforelse
@@ -278,8 +308,14 @@
         <ul class="menu p-4 overflow-y-auto text-base-content">
           <li>
             <div class="flex items-center">
-              <input type="checkbox" checked="checked" class="checkbox checkbox-md mr-2" wire:model.defer='filterPrioritySetting' value="on" id="filterPrioritySetting">
+              <input type="checkbox" class="checkbox checkbox-md mr-2" wire:model.defer='filterPrioritySetting' value="on" id="filterPrioritySetting">
               <label for="filterPrioritySetting" class="label">Filter Priority</label>
+            </div>
+          </li>
+          <li>
+            <div class="flex items-center">
+              <input type="checkbox" class="checkbox checkbox-md mr-2" wire:model.defer='searchSetting' value="on" id="searchSetting">
+              <label for="searchSetting" class="label">Search</label>
             </div>
           </li>
           <li>
