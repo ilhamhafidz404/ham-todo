@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Hastag;
 use App\Models\Task;
 use Livewire\Component;
 use Illuminate\Support\Str;
@@ -12,39 +13,49 @@ class TodoList extends Component
 
   use WithPagination;
 
-  public $task, $taskId, $priority, $note;
+  public $task, $taskId, $priority, $note, $hastags= [];
   public $edit = false;
   public $tasks = [];
+  public $hastag;
 
-  public $todoSetting= false, $filterPrioritySetting, $filterTagSetting, $searchSetting, $addSetting= 'on';
-  public $filterPriority, $searchTask;
+  public $todoSetting= false, $filterPrioritySetting, $filterHastagSetting, $searchSetting, $addSetting= 'on', $addHastagSetting;
+  public $filterPriority, $searchTask, $addHastag;
+
+
   public function render() {
     if(!$this->filterPriority){
       $myTasks= Task::where('task', 'LIKE', '%'.$this->searchTask.'%')->latest()->paginate(10);
     } else{
       $myTasks= Task::where('priority', 'LIKE', '%'.$this->filterPriority.'%')->where('task', 'LIKE', '%'.$this->searchTask.'%')->latest()->paginate(5);
     }
+    $myHastags= Hastag::latest()->get();
     // $myTasks= Task::latest()->paginate(10);
-    return view('livewire.todo-list', compact('myTasks'));
+    return view('livewire.todo-list', compact('myTasks', 'myHastags'));
   }
 
   public function filterPriority($filterBy){
     $this->filterPriority = $filterBy;
   }
 
+  // public function filterHastagSetting($filterBy){
+  //   this
+  // }
+
   public function todoSetting(){
-    if($this->filterPrioritySetting || $this->filterTagSetting){
+    if($this->filterPrioritySetting || $this->filterHastagSetting || $this->addHastagSetting){
       $this->todoSetting= true;
     } else{
       $this->todoSetting= false;
     }
     $this->filterPrioritySetting= $this->filterPrioritySetting;
     $this->searchSetting= $this->searchSetting;
+    $this->addHastagSetting= $this->addHastagSetting;
     if($this->todoSetting == null){
       $this->filterPriority= null;
       $this->searchTask= null;
-      $this->addSetting= 'on';
+      $this->addHastag= null;
     }
+    $this->addSetting= 'on';
   }
 
   public function store() {
@@ -53,11 +64,12 @@ class TodoList extends Component
       'slug' => Str::slug($this->task),
       "priority" => $this->priority,
       "note" => $this->note
-    ]);
+    ])->hastag()->attach($this->hastags);
 
     $this->task = null;
     $this->priority = null;
     $this->note = null;
+    $this->hastags = [];
 
     session()->flash('success', 'Berhasil Menambah Tugas');
   }
@@ -107,5 +119,14 @@ class TodoList extends Component
     $this->task= null;
     $this->priority= null;
     $this->note= null;
+  }
+
+  public function hastagStore(){
+    Hastag::create([
+      'name' => $this->hastag,
+      'slug' => Str::slug($this->hastag)
+    ]);
+
+    $this->hastag = null;
   }
 }

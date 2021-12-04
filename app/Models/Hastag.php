@@ -10,6 +10,8 @@ class Hastag extends Model
 {
   use HasFactory;
 
+  protected $fillable= ['name', 'slug'];
+
   public function Task() {
     return $this->belongsToMany(Task::class);
   }

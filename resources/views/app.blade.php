@@ -12,8 +12,9 @@
 <body data-theme="light">
     @livewire('todo-list')
 
-
     <script src="https://kit.fontawesome.com/bfdfedea1a.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+      
     @livewireScripts
 </body>
 </html>
