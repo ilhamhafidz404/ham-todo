@@ -19,6 +19,7 @@
   @endif
 
   <div class="card bg-white p-10">
+    {{-- Form Edit --}}
     @if($edit)
       <form wire:submit.prevent="update()">
         <div class="form-control">
@@ -79,45 +80,50 @@
           </div>
         </div>
       </form>
+    {{-- Form Add Hastag --}}
     @elseif($addHastagSetting)
       @if ($searchSetting)
+      {{-- Search Toggle --}}
         <div class="form-control absolute right-0 top-0 p-3 rounded-box bg-gray-200 rounded-r-none rounded-t-none">
           <label class="cursor-pointer label">
             <div class="inline-flex items-center">
               <span class="label-text mr-2">Search Hastag</span> 
-              <input type="checkbox" checked="checked" class="toggle" value="on" wire:model="addSetting">
+              <input type="checkbox" checked="checked" class="toggle" value="on" wire:model="addHastag">
               <span class="label-text ml-2">Add Hastag</span> 
             </div>
           </label>
         </div>
       @endif
-      @if ($searchSetting && !$addSetting)
+      @if ($searchSetting && !$addHastag)
+        {{-- Search Hastag --}}
         <div class="form-control">
           <label class="label" for="task">
             <span class="label-text font-bold tracking-wide">Search Hastag: </span>
           </label>
           <div class="relative">
-            <input placeholder="Search" class="w-full pr-16 input input-primary input-bordered text-gray-800" type="text" wire:model="searchTask"> 
+            <input placeholder="Search" class="w-full pr-16 input input-primary input-bordered text-gray-800" type="text" wire:model="searchHastag"> 
             <button class="absolute top-0 right-0 rounded-l-none btn btn-ghost text-gray-500">
               <i class="fas fa-search"></i>
             </button>
           </div>
         </div>
       @endif
-      <form wire:submit.prevent="hastagStore()">
-        <div class="form-control">
-          <label class="label" for="hastag">
-            <span class="label-text">Add Hastag</span>
-          </label> 
-          <div class="relative">
-            <input type="text" placeholder="Search" class="w-full pr-16 input input-primary input-bordered text-gray-800" id="hastag" wire:model="hastag"> 
-            <button class="absolute top-0 right-0 rounded-l-none btn btn-primary">
-              <i class="fas fa-plus"></i>
-            </button>
-          </div>
-        </div> 
-        {{ $hastag }}
-      </form>
+      @if ($addHastag)
+        <form wire:submit.prevent="hastagStore()">
+          <div class="form-control">
+            <label class="label" for="hastag">
+              <span class="label-text font-bold tracking-wide">Add Hastag</span>
+            </label> 
+            <div class="relative">
+              <input type="text" placeholder="Main Bola" class="w-full pr-16 input input-primary input-bordered text-gray-800" id="hastag" wire:model="hastag"> 
+              <button class="absolute top-0 right-0 rounded-l-none btn btn-primary">
+                <i class="fas fa-plus"></i>
+              </button>
+            </div>
+          </div> 
+        </form>
+      @endif
+    {{-- Form Add Task --}}
     @else
       @if ($searchSetting)
         <div class="form-control absolute right-0 top-0 p-3 rounded-box bg-gray-200 rounded-r-none rounded-t-none">
@@ -226,51 +232,28 @@
             <tr>
               <th></th>
               <th>Name</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
             @forelse ($myHastags as $index => $hastag)
-              {{-- @if ($task->id == $taskId)
-                <tr class="hover">
-                  <th style="padding: 0px !important">
-                    <div style="width: 6px; height: 85%; transform: translateY(-50%)" class="bg-green-500 absolute left-0 top-1/5 cursor-pointer rounded">
-                      <div data-tip="Editing" class="tooltip w-full h-full tooltip-right">
-                      </div>
-                    </div>
-                  </th>
-                  <th>
-                    <label>
-                      <input type="checkbox" checked class="checkbox">
-                    </label>
-                  </th>
-                  <td colspan="3">
-                    <div class="flex items-center text-center space-x-3 md:ml-36 ml-0">
-                      <div>
-                        <div class="font-light">
-                          <span id="typed"></span>
-                          <script>
-                            var typed = new Typed('#typed', {
-                              stringsElement: '#typed-strings',
-                              strings: ['Editing Task', 'Editing Task.', 'Editing Task..', 'Editing Task...', 'Editing Task....', 'Editing Task....'],
-                              loop: true
-                            });
-                          </script>
-                        </div>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-              @else
-              @endif --}}
               <tr class="hover">
                 <th>
                   <label>
                     <input type="checkbox" class="checkbox">
                   </label>
                 </th>
-                <th style="padding: 0px !important">
+                <td style="padding: 0px !important">
                   {{ $hastag->name }}
-                </th>
+                </td>
+                <td>
+                  <button class="btn btn-error btn-sm">
+                    <i class="fas fa-trash-alt"></i>
+                  </button>
+                  <button class="btn btn-success btn-sm">
+                    <i class="fas fa-pencil-alt"></i>
+                  </button>
+                </td>
               </tr>
             @empty
             <tr>

@@ -18,8 +18,10 @@ class TodoList extends Component
   public $tasks = [];
   public $hastag;
 
+  public $searchHastag;
+
   public $todoSetting= false, $filterPrioritySetting, $filterHastagSetting, $searchSetting, $addSetting= 'on', $addHastagSetting;
-  public $filterPriority, $searchTask, $addHastag;
+  public $filterPriority, $searchTask, $addHastag= true;
 
 
   public function render() {
@@ -28,7 +30,11 @@ class TodoList extends Component
     } else{
       $myTasks= Task::where('priority', 'LIKE', '%'.$this->filterPriority.'%')->where('task', 'LIKE', '%'.$this->searchTask.'%')->latest()->paginate(5);
     }
-    $myHastags= Hastag::latest()->get();
+    if(!$this->searchHastag){
+      $myHastags= Hastag::latest()->get();
+    }else{
+      $myHastags= Hastag::where('name', 'LIKE', '%'.$this->searchHastag.'%')->latest()->get();
+    }
     // $myTasks= Task::latest()->paginate(10);
     return view('livewire.todo-list', compact('myTasks', 'myHastags'));
   }
@@ -53,7 +59,7 @@ class TodoList extends Component
     if($this->todoSetting == null){
       $this->filterPriority= null;
       $this->searchTask= null;
-      $this->addHastag= null;
+      $this->addHastagSetting= null;
     }
     $this->addSetting= 'on';
   }
