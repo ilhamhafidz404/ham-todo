@@ -63,9 +63,15 @@ class TodoList extends Component
       $this->addHastagSetting= null;
     }
     $this->editHastag= false;
+    $this->edit= false;
     $this->searchHastag= null;
     $this->addSetting= 'on';
     $this->addHastag= 'on';
+
+    $this->task= null;
+    $this->taskId= null;
+    $this->hastag= null;
+    $this->hastagId= null;
   }
 
   public function store() {

@@ -480,7 +480,7 @@
   @endif
 
   @if ($filterPrioritySetting)
-  <div class="card absolute bg-white rounded-box right-28 top-10">
+  <div class="card lg:absolute static bg-white rounded-box lg:right-28 lg:top-10 mt-10 lg:mt-0">
     <div class="card-header bg-success p-3 text-center">
       <h6>Filter Priority</h6>
     </div>
@@ -506,13 +506,13 @@
   </div>
   @endif
   @if ($filterHastagSetting)
-  <div class="card absolute bg-white rounded-box right-28 @if ($filterPrioritySetting)
-                                                              top-80
+  <div class="card lg:absolute static bg-white rounded-box lg:right-28 mt-10 lg:mt-0 @if ($filterPrioritySetting)
+                                                              lg:top-80
                                                             @else
-                                                              top-10
+                                                              lg:top-10
                                                             @endif
   ">
-    <div class="card-header bg-error p-3 text-center w-48">
+    <div class="card-header bg-error p-3 text-center w-full">
       <h6>Filter Tag</h6>
     </div>
     <div class="card-body p-3">
