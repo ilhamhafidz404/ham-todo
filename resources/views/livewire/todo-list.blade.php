@@ -80,6 +80,30 @@
           </div>
         </div>
       </form>
+
+    @elseif($editHastag)
+    <form wire:submit.prevent="hastagUpdate()">
+      <div class="form-control">
+        <label class="label" for="task">
+          <span class="label-text font-bold tracking-wide">Edit Hastag: </span>
+        </label>
+        <div class="relative flex space-x-2">
+          <div data-tip="Kembali" class="tooltip">
+            <button class="btn btn-error" wire:click="cancelHastagEdit" type="button">
+              <i class="fas fa-backward"></i>
+            </button>
+          </div>
+          <div class="w-full">
+            <input type="text" placeholder="Memasak" class="w-full pr-16 pl-5 input input-success input-bordered bg-gray-100 text-gray-800" id="task" wire:model="hastag">
+            <div data-tip="Simpan" class="tooltip absolute top-0 right-0">
+              <button class="flex items-center h-full w-full rounded-l-none btn btn-success">
+                <i class="fas fa-save"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
     {{-- Form Add Hastag --}}
     @elseif($addHastagSetting)
       @if ($searchSetting)
@@ -237,31 +261,53 @@
           </thead>
           <tbody>
             @forelse ($myHastags as $index => $hastag)
-              <tr class="hover">
-                <th>
-                  <label>
-                    <input type="checkbox" class="checkbox">
-                  </label>
-                </th>
-                <td style="padding: 0px !important">
-                  {{ $hastag->name }}
-                </td>
-                <td>
-                  <button class="btn btn-error btn-sm">
-                    <i class="fas fa-trash-alt"></i>
-                  </button>
-                  <button class="btn btn-success btn-sm">
-                    <i class="fas fa-pencil-alt"></i>
-                  </button>
-                </td>
-              </tr>
+              @if ($hastagId == $hastag->id)    
+                <tr class="hover">
+                  <th>
+                    <label>
+                      <input type="checkbox" class="checkbox" checked>
+                    </label>
+                  </th>
+                  <td colspan="2">
+                    <div class="font-light">
+                      <span id="typed"></span>
+                      <script>
+                        var typed = new Typed('#typed', {
+                          stringsElement: '#typed-strings',
+                          strings: ['Editing Hastag', 'Editing Hastag.', 'Editing Hastag..', 'Editing Hastag...', 'Editing Hastag....', 'Editing Hastag....'],
+                          loop: true
+                        });
+                      </script>
+                    </div>
+                  </td>
+                </tr>
+              @else
+                <tr class="hover">
+                  <th>
+                    <label>
+                      <input type="checkbox" class="checkbox">
+                    </label>
+                  </th>
+                  <td style="padding: 0px !important">
+                    {{ $hastag->name }}
+                  </td>
+                  <td>
+                    <button class="btn btn-error btn-sm" wire:click="hastagDestroy({{$hastag->id}})">
+                      <i class="fas fa-trash-alt"></i>
+                    </button>
+                    <button class="btn btn-success btn-sm" wire:click="hastagEdit('{{$hastag->id}}', '{{$hastag->name}}')">
+                      <i class="fas fa-pencil-alt"></i>
+                    </button>
+                  </td>
+                </tr>
+              @endif
             @empty
             <tr>
               <th colspan="5" class="text-center">
-                @if ($searchTask)
-                  Tidak ada tugas {{ $searchTask }}
+                @if ($searchHastag)
+                  Tidak ada Hastag {{ $searchHastag }}
                 @else
-                    Tidak Ada Tugas Hari ini
+                    Tidak Ada Hastag Terkait
                 @endif
               </th>
             </tr>

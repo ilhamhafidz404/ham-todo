@@ -16,7 +16,8 @@ class TodoList extends Component
   public $task, $taskId, $priority, $note, $hastags= [];
   public $edit = false;
   public $tasks = [];
-  public $hastag;
+  public $hastag, $hastagId;
+  public $editHastag= false;
 
   public $searchHastag;
 
@@ -61,7 +62,10 @@ class TodoList extends Component
       $this->searchTask= null;
       $this->addHastagSetting= null;
     }
+    $this->editHastag= false;
+    $this->searchHastag= null;
     $this->addSetting= 'on';
+    $this->addHastag= 'on';
   }
 
   public function store() {
@@ -134,5 +138,33 @@ class TodoList extends Component
     ]);
 
     $this->hastag = null;
+  }
+
+  public function hastagDestroy($id){
+    Hastag::find($id)->delete();
+  }
+
+  public function hastagEdit($id, $name){
+    $this->editHastag = true;
+    $this->addHastag = false;
+    $this->hastag = $name;
+    $this->hastagId = $id;
+  }
+
+  public function hastagUpdate(){
+    Hastag::find($this->hastagId)->update([
+      'name' => $this->hastag,
+      'slug' => Str::slug($this->hastag)
+    ]);
+
+    $this->editHastag= false;
+    $this->addHastag = true;
+  }
+
+  public function cancelHastagEdit(){
+    $this->hastag= null;
+    $this->addHastag = true;
+    $this->editHastag= false;
+    $this->hastagId= null;
   }
 }
