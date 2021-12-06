@@ -248,6 +248,17 @@
     @endif
   </div> 
 
+
+  @if ($checkedTask)
+      <button class="btn btn-error" wire:click="destroyMultiTask()">
+        Data Terpilih {{ count($checkedTask) }}
+      </button>
+  @elseif($checkedHastag)
+    <button class="btn btn-error" wire:click="hastagMultiDestroy()">
+      Data Terpilih {{ count($checkedHastag) }}
+    </button>
+  @endif
+
   @if ($addHastagSetting)
     <div class="card mt-10 text-black bg-white">
       <div class="overflow-x-auto">
@@ -285,7 +296,7 @@
                 <tr class="hover">
                   <th>
                     <label>
-                      <input type="checkbox" class="checkbox">
+                      <input type="checkbox" class="checkbox" wire:model="checkedHastag" value="{{ $hastag->id }}">
                     </label>
                   </th>
                   <td style="padding: 0px !important">
@@ -345,7 +356,7 @@
                   </th>
                   <th>
                     <label>
-                      <input type="checkbox" checked class="checkbox">
+                      <input type="checkbox" checked class="checkbox" value="{{$task->id}}" wire:model="checkedTask">
                     </label>
                   </th>
                   <td colspan="3">
@@ -392,7 +403,7 @@
                   </th>
                   <th>
                     <label>
-                      <input type="checkbox" class="checkbox">
+                      <input type="checkbox" class="checkbox" value="{{$task->id}}" wire:model="checkedTask">
                     </label>
                   </th>
                   <td>

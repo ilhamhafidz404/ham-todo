@@ -25,6 +25,9 @@ class TodoList extends Component
   public $filterPriority, $searchTask, $addHastag= true;
 
 
+  public $checkedTask= [], $checkedHastag= [];
+
+
   public function render() {
     if(!$this->filterPriority){
       $myTasks= Task::where('task', 'LIKE', '%'.$this->searchTask.'%')->latest()->paginate(10);
@@ -94,6 +97,11 @@ class TodoList extends Component
     Task::find($id)->delete();
   }
 
+  public function destroyMultiTask(){
+    Task::whereKey($this->checkedTask)->delete();
+    $this->checkedTask= [];
+  }
+
   public function edit($tugas, $id, $priority, $note) {
     $this->edit = true;
     $this->task = $tugas;
@@ -148,6 +156,11 @@ class TodoList extends Component
 
   public function hastagDestroy($id){
     Hastag::find($id)->delete();
+  }
+
+  public function hastagMultiDestroy(){
+    Hastag::whereKey($this->checkedHastag)->delete();
+    $this->checkedHastag= [];
   }
 
   public function hastagEdit($id, $name){
